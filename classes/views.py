@@ -313,8 +313,8 @@ class CreateScore(APIView):
             student = get_object_or_404(User, username =student_id)
             print(student)
             score_data = {
-                "classroom": classroom,
-                "student": student,
+                "classroom": classroom.class_id,
+                "student": student.id,
                 "score_system_1": request.data.get("score_system_1"),
                 "score_system_2": request.data.get("score_system_2"),
                 "score_system_3": request.data.get("score_system_3")
@@ -328,3 +328,31 @@ class CreateScore(APIView):
         else:
             return Response({"message": "You do not have permission to add scores for this student."},
                             status=status.HTTP_403_FORBIDDEN)
+
+class ListScores(APIView):
+    def get(self, request, class_id):
+        classroom = get_object_or_404(Classroom, class_id=class_id)
+
+        if request.user.is_superuser or (request.user in classroom.teachers.all()):
+            scores = Score.objects.filter(classroom=classroom)
+            score_serializer = ScoreSerializer(scores, many=True)
+            return Response(score_serializer.data, status=status.HTTP_200_OK)
+        elif request.user in classroom.students.all():
+            student = request.user
+            scores = Score.objects.filter(classroom=classroom, student=student)
+            score_serializer = ScoreSerializer(scores, many=True)
+            return Response(score_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "You do not have permission to access scores for this class."},
+                            status=status.HTTP_403_FORBIDDEN)
+
+
+class ListStudentScores(APIView):
+    def get(self, request, student_id, school_year, semester):
+        user_student = get_object_or_404(User, username =student_id)
+        classroom_ids = user_student.student.class_join.filter(school_year=school_year, semester=semester).values_list('class_id',
+                                                                                                          flat=True)
+
+        scores = Score.objects.filter(classroom__class_id__in=classroom_ids, student=user_student)
+        score_serializer = ScoreSerializer(scores, many=True)
+        return Response(score_serializer.data, status=status.HTTP_200_OK)

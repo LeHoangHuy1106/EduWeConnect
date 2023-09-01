@@ -225,10 +225,23 @@ def Test_create_score (username, password, classroom_id, student_id):
         }
     response = requests.post(url, json=data, headers=headers)
     print(response.status_code)
+
     print(response.json())
 
+def Test_get_score_student (username, password, student_id, year, semester):
 
+    url = f"http://127.0.0.1:8000/classroom/student/{student_id}/scores/{year}/{semester}/"
+    headers = Login(username, password)
+    response = requests.get(url,  headers=headers)
+    print(response.status_code)
+    print(response.json())
 
+def Test_get_score_class (username, password, classroom_id):
+    url = f"http://127.0.0.1:8000/classroom/{classroom_id}/student/list-scores/"
+    headers = Login(username, password)
+    response = requests.get(url,  headers=headers)
+    print(response.status_code)
+    print(response.json())
 
 def Add_ClassRoom():
     username = "admin01"
@@ -356,7 +369,25 @@ def CreateScore():
     student_id= "hs20200001"
     Test_create_score(username, password, classroom_id, student_id)
 
+def GetScore():
+    username = "admin01"
+    password = "123456"
+    classroom_id = "class00001"
+    Test_get_score_class (username, password, classroom_id)
 
+def GetScoreClass():
+    username = "admin01"
+    password = "123456"
+    classroom_id = "class00001"
+    Test_get_score_class(username, password, classroom_id)
+
+def GetScoreStudent():
+    username = "admin01"
+    password = "123456"
+    student_id= "hs20200001"
+    year = '2023'
+    semester = "1"
+    Test_get_score_student (username, password, student_id, year, semester)
 
 if __name__ == '__main__':
     # Add_ClassRoom()
@@ -378,4 +409,6 @@ if __name__ == '__main__':
     # # GetListLikePost()
     # AddComment()
     # GetComment()
-    CreateScore()
+    # CreateScore()
+    # GetScore()
+    GetScoreStudent()
