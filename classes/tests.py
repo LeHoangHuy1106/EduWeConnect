@@ -52,6 +52,8 @@ def Test_AddClassRoom(username, password, data):
     # Thay thế bằng dữ liệu tạo học sinh tương ứng
     response = requests.post(url, json=data, headers=headers)
     print(response.status_code)
+    print(response.json())
+
 
 def Test_update_info_classroom (username, password, classroom_id):
     url = f"http://127.0.0.1:8000/classroom/{classroom_id}/update-info/"
@@ -266,14 +268,17 @@ def AddTeacherJoinInClass():
     username = "admin01"
     password = "123456"
     classroom_id = "class00001"
-    Test_add_teacher_join_classroom(username, password, classroom_id, 'gv20200005')
+    Test_add_teacher_join_classroom(username, password, classroom_id, 'gv20200001')
+
 
 def AddStudentJoinInClass():
     username = "admin01"
     password = "123456"
     classroom_id = "class00001"
     Test_add_student_join_classroom(username, password, classroom_id, 'hs20200001')
-
+    Test_add_student_join_classroom(username, password, classroom_id, 'hs20200002')
+    Test_add_student_join_classroom(username, password, classroom_id, 'hs20200003')
+    Test_add_student_join_classroom(username, password, classroom_id, 'hs20200004')
 def GetListClassJoinIn():
     username = "admin01"
     password = "123456"
@@ -311,12 +316,13 @@ def GetTeacherJoinClass():
     Test_get_teacher_join_classroom(username, password, classroom_id)
 
 def CreatePost():
-    username = "hs20200001"
+    username = "admin01"
     password = "123456"
     classroom_id = "class00001"
     Test_create_posst_in_class(username, password, classroom_id)
+
 def EditPost():
-    username = "admin01"
+    username = "hs20200001"
     password = "123456"
     classroom_id = "class00001"
     post_id ="postclass0000100002"
@@ -328,7 +334,7 @@ def DeletePost():
     post_id ="postclass0000100001"
     Test_delete_posst_in_class (username, password, classroom_id,post_id)
 def LikePost():
-    username = "hs20200001"
+    username = "gv20200002"
     password = "123456"
     classroom_id = "class00001"
     post_id ="postclass0000100001"
@@ -341,14 +347,14 @@ def GetPost():
     Test_get_post_in_class(username, password, classroom_id)
 
 def GetListLikePost():
-    username = "admin01"
+    username = "hs20200001"
     password = "123456"
     classroom_id = "class00001"
     post_id ="postclass0000100001"
     Test_get_listlike_posst_in_class (username, password, classroom_id,post_id)
 
 def AddComment():
-    username = "admin01"
+    username = "gv20200002"
     password = "123456"
     classroom_id = "class00001"
     post_id ="postclass0000100002"
@@ -407,8 +413,8 @@ if __name__ == '__main__':
     # LikePost()
     # GetPost()
     # # GetListLikePost()
-    # AddComment()
+    AddComment()
     # GetComment()
     # CreateScore()
     # GetScore()
-    GetScoreStudent()
+    # GetScoreStudent()

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ldno0da*)$@7)+sv(**v_xmiv_(r1r=r@m4owq^&kjig7=$*^c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.17.15.37','172.17.15.45', '127.0.0.1']
+ALLOWED_HOSTS = ['172.17.15.37','172.17.15.45', '127.0.0.1','0.0.0.0']
 
 
 # Application definition
@@ -92,7 +92,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo', # Sử dụng djongo để tương tác với MongoDB
         'NAME': 'eduweconnectDB', # Tên của database
-
+        'CLIENT': {
+            'host': 'mongodb+srv://kc80943:12345654321@cluster0.wb591iv.mongodb.net/',  # Chuỗi kết nối MongoDB Atlas
+        },
     }
 }
 
@@ -143,3 +145,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+Token_EXPIRE_SECONDS = 60 * 60 * 24 * 7 

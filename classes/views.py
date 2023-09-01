@@ -146,23 +146,26 @@ class ListClassroomTeachersAPIView(APIView):
         return Response(serialized_teachers.data)
 
 
-
 class CreatePost(APIView):
-    permission_classes = [IsStudentOrTeacherInClass]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, class_id):
         try:
             classroom = Classroom.objects.get(class_id=class_id)
         except Classroom.DoesNotExist:
             return Response({"message": "Classroom not found."}, status=status.HTTP_404_NOT_FOUND)
-        classroom = Classroom.objects.get(class_id=class_id)
+
         post_count = classroom.posts.count()
         next_post_number = post_count + 1
         post_id = f"post{class_id}{next_post_number:05}"
+
+        # Lấy ID của người đăng nhập
+        author_id = request.user.id
+
         post_data = {
-            "post_id" : post_id,
+            "post_id": post_id,
             "classroom": classroom.class_id,
-            "author": request.user.id,
+            "author": author_id,  # Sử dụng ID của người đăng nhập làm author_id
             "content": request.data.get("content"),
             "is_edited": False
         }
@@ -172,7 +175,6 @@ class CreatePost(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class UpdatePostContentAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -216,16 +218,13 @@ class LikePost(APIView):
     def post(self, request, class_id, post_id):
         post = get_object_or_404(Post, post_id=post_id, classroom__class_id=class_id)
 
-        if request.user.is_superuser or (request.user in post.classroom.teachers.all()) or (request.user in post.classroom.students.all()):
-            if request.user in post.likes.all():
-                post.likes.remove(request.user)
-                return Response({"message": "Post unliked successfully."}, status=status.HTTP_200_OK)
-            else:
-                post.likes.add(request.user)
-                return Response({"message": "Post liked successfully."}, status=status.HTTP_201_CREATED)
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+            return Response({"message": "Post unliked successfully."}, status=status.HTTP_200_OK)
         else:
-            return Response({"message": "You don't have permission to like this post."},
-                            status=status.HTTP_403_FORBIDDEN)
+            post.likes.add(request.user)
+            return Response({"message": "Post liked successfully."}, status=status.HTTP_201_CREATED)
+
 
 
 class ListClassroomPosts(APIView):
@@ -267,26 +266,24 @@ class ListLikedUsers(APIView):
 
 
 class CreateComment(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request, class_id, post_id):
         classroom = get_object_or_404(Classroom, class_id=class_id)
         post = get_object_or_404(Post, post_id=post_id, classroom=classroom)
 
-        if request.user.is_superuser or (request.user in classroom.teachers.all()) or (
-                request.user in classroom.students.all()):
-            comment_id = "cmt" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=7))
-            comment_data = {
-                "comment_id": comment_id,
-                "content": request.data.get("content"),
-                "author": request.user,
-                "post": post
-            }
-            comment = Comment(**comment_data)
-            comment.save()
-            comment_serializer = CommentSerializer(comment)
-            return Response(comment_serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response({"message": "You do not have permission to create a comment for this post."},
-                            status=status.HTTP_403_FORBIDDEN)
+
+        comment_id = "cmt" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=7))
+        comment_data = {
+            "comment_id": comment_id,
+            "content": request.data.get("content"),
+            "author": request.user,
+            "post": post
+        }
+        comment = Comment(**comment_data)
+        comment.save()
+        comment_serializer = CommentSerializer(comment)
+        return Response(comment_serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 class ListComments(APIView):
