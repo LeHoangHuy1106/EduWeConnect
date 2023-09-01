@@ -171,26 +171,30 @@ def AddStudents():
         Test_AddStudent(username, password, student)
 if __name__ == '__main__':
     """test add list student"""
-    AddStudents()
+    # AddStudents()
     """ test login"""
-    username = "hs20200003"
+    username = "hs20200002"
     password =  "123456"
+
     # not exist account
     # Test_login(username,password)
     # change password in first login
     # Test_Change_password(username,password)
+
     """ get detail student"""
-    username = "admin01"
+    username = "gv20200002"
     password = "123456"
-    Test_Get_List_Student(username, password)
+    # Test_Get_List_Student(username, password)
     # Test_Get_detail_student_by_usename(username, password)
     """test add list student"""
     # AddTeachers()
     # not exist account
-    username = "gv20200004"
-    password = "0123456789"
-    # Test_login(username,password)
+    # username = "gv20200001"
+    # password = "0123456789"
+    Test_login(username,password)
     # change password in first login
+    # username = "gv20200001"
+    # password = "0123456789"
     # Test_Change_password(username,password)
 
 

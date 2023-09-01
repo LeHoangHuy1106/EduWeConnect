@@ -31,7 +31,8 @@ def AddSubject():
         {"id_subject": "sub00", "name": "English"},
         {"id_subject": "sub00", "name": "Computer Science"},
         {"id_subject": "sub00", "name": "Literature"},
-        {"id_subject": "sub00", "name": "Physical Education"}
+        {"id_subject": "sub00", "name": "Physical Education"},
+        {"id_subject": "sub00", "name": "homeroom"}
     ]
 
     header =Login("admin01", "123456")

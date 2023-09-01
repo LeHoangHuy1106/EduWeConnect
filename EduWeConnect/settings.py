@@ -92,9 +92,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo', # Sử dụng djongo để tương tác với MongoDB
         'NAME': 'eduweconnectDB', # Tên của database
-        'CLIENT': {
-            'host': 'mongodb+srv://kc80943:12345654321@cluster0.wb591iv.mongodb.net/',  # Chuỗi kết nối MongoDB Atlas
-        },
+
     }
 }
 
