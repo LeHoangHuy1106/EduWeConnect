@@ -171,6 +171,7 @@ class CreatePost(APIView):
         }
 
         serializer = PostSerializer(data=post_data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -197,6 +198,8 @@ class UpdatePostContentAPIView(APIView):
         post.save()
 
         serializer = PostSerializer(post)
+
+
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -244,7 +247,7 @@ class ListClassroomPosts(APIView):
                     "author": post.author.username,
                     "created_date": post.created_date,
                     "likes": post.likes.count(),
-                    "is_edited": post.is_edited
+                    "is_edited": post.is_editez
                 }
                 post_data.append(post_info)
             return Response(post_data, status=status.HTTP_200_OK)
@@ -295,6 +298,7 @@ class ListComments(APIView):
                 request.user in classroom.students.all()):
             comments = Comment.objects.filter(post=post)
             comment_serializer = CommentSerializer(comments, many=True)
+
             return Response(comment_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({"message": "You do not have permission to view comments for this post."},
@@ -342,7 +346,6 @@ class ListScores(APIView):
         else:
             return Response({"message": "You do not have permission to access scores for this class."},
                             status=status.HTTP_403_FORBIDDEN)
-
 
 class ListStudentScores(APIView):
     def get(self, request, student_id, school_year, semester):

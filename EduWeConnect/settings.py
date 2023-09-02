@@ -145,4 +145,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-Token_EXPIRE_SECONDS = 60 * 60 * 24 * 7 
+Token_EXPIRE_SECONDS = 60 * 60 * 24 * 7

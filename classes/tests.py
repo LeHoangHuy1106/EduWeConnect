@@ -267,8 +267,8 @@ def DeactivateClassroom():
 def AddTeacherJoinInClass():
     username = "admin01"
     password = "123456"
-    classroom_id = "class00001"
-    Test_add_teacher_join_classroom(username, password, classroom_id, 'gv20200001')
+    classroom_id = "class00002"
+    Test_add_teacher_join_classroom(username, password, classroom_id, 'gv20200002')
 
 
 def AddStudentJoinInClass():
@@ -341,7 +341,7 @@ def LikePost():
     Test_like_posst_in_class (username, password, classroom_id,post_id)
 
 def GetPost():
-    username = "hs20200001"
+    username = "admin01"
     password = "123456"
     classroom_id = "class00001"
     Test_get_post_in_class(username, password, classroom_id)
@@ -413,8 +413,8 @@ if __name__ == '__main__':
     # LikePost()
     # GetPost()
     # # GetListLikePost()
-    AddComment()
-    # GetComment()
+    # AddComment()
+    GetComment()
     # CreateScore()
     # GetScore()
     # GetScoreStudent()
