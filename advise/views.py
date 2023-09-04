@@ -25,3 +25,15 @@ class DataScore(APIView):
         # Serialize danh sách từ điển thành JSON
         serializer = DataScoreSerializer(result_data, many=True)
         return Response(serializer.data)
+
+class DataScore(APIView):
+    def get(self, request, code, *args, **kwargs):
+        global df
+        # Lọc các hàng có mã trường tương ứng
+        code= "".join([code,' '])
+        filtered_data = df[df['ID'] == code]
+        # Chuyển kết quả thành danh sách từ điển
+        result_data = filtered_data.to_dict(orient='records')
+        # Serialize danh sách từ điển thành JSON
+        serializer = DataScoreSerializer(result_data, many=True)
+        return Response(serializer.data)
