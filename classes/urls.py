@@ -3,6 +3,7 @@ from classes.views import AddClassroomAPIView, UpdateClassroomAPIView, Deactivat
     AddTeacherToClassroomAPIView, AddStudentToClassroomAPIView, ListClassroomStudentsAPIView, \
     ListClassroomTeachersAPIView, CreatePost, UpdatePostContentAPIView, DeletePost, LikePost, ListClassroomPosts, \
     ListLikedUsers, CreateComment, ListComments, CreateScore, ListScores, ListStudentScores
+from feedbacks.views import FeedbackCreateView
 
 urlpatterns = [
     path('add-classroom', AddClassroomAPIView.as_view(), name='add-classroom'),
@@ -24,5 +25,6 @@ urlpatterns = [
     path('<str:class_id>/student/<str:student_id>/add-score/', CreateScore.as_view(), name='add_score'),
     path('<str:class_id>/student/list-scores/', ListScores.as_view(), name='list_scores'),
     path('student/<str:student_id>/scores/<str:school_year>/<int:semester>/', ListStudentScores.as_view(),name='list_student_scores'),
+    path('feedback/<str:username_student>/', FeedbackCreateView.as_view(), name='create-feedback'),
 
 ]

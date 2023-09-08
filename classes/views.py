@@ -277,10 +277,11 @@ class CreateComment(APIView):
 
         comment_id = "cmt" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=7))
         comment_data = {
+            "feedback_id": "feedback_id",
             "comment_id": comment_id,
             "content": request.data.get("content"),
             "author": request.user,
-            "post": post
+            "post": post,
         }
         comment = Comment(**comment_data)
         comment.save()
@@ -355,4 +356,5 @@ class ListStudentScores(APIView):
 
         scores = Score.objects.filter(classroom__class_id__in=classroom_ids, student=user_student)
         score_serializer = ScoreSerializer(scores, many=True)
+
         return Response(score_serializer.data, status=status.HTTP_200_OK)

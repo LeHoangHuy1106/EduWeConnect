@@ -245,6 +245,17 @@ def Test_get_score_class (username, password, classroom_id):
     print(response.status_code)
     print(response.json())
 
+def Test_create_feeback(username, password, student_username):
+    url = f"http://127.0.0.1:8000/classroom/feedback/{student_username}/"
+    headers = Login(username, password)
+    data ={
+        "posted_date": "2023-09-09T14:30:00Z",
+        "content": "This student has shown remarkable progress in the recent semester."
+    }
+    response = requests.post(url,  headers=headers, json=data)
+    print(response.status_code)
+    print(response.json())
+
 def Add_ClassRoom():
     username = "admin01"
     password = "123456"
@@ -395,6 +406,25 @@ def GetScoreStudent():
     semester = "1"
     Test_get_score_student (username, password, student_id, year, semester)
 
+def CreateFeedBack():
+    username  ="gv20200004"
+    password = "123456"
+    student_username = "hs20200001"
+
+    Test_create_feeback(username, password, student_username)
+
+
+def Test_get_comment_post (username, password):
+    url = f"http://127.0.0.1:8000/feedback"
+    headers = Login(username, password)
+    response = requests.get(url, headers=headers)
+    print(response.status_code)
+    print(response.json())
+
+def GetFeedback():
+    username  ="gv20200004"
+    password = "123456"
+    Test_get_comment_post(username, password)
 if __name__ == '__main__':
     # Add_ClassRoom()
     # ChangeInfoClassroom()
@@ -414,7 +444,9 @@ if __name__ == '__main__':
     # GetPost()
     # # GetListLikePost()
     # AddComment()
-    GetComment()
+    # GetComment()
     # CreateScore()
     # GetScore()
     # GetScoreStudent()
+    # CreateFeedBack()
+    GetFeedback()
