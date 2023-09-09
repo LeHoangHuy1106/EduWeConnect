@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'users',
     'classes',
     'subjects',
-    'feedbacks'
+    'feedbacks',
+    'announcement'
 
 ]
 

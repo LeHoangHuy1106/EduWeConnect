@@ -256,6 +256,26 @@ def Test_create_feeback(username, password, student_username):
     print(response.status_code)
     print(response.json())
 
+
+def Test_create_announcement(username, password):
+    url = f"http://127.0.0.1:8000/announcement/add/"
+    headers = Login(username, password)
+    data ={
+        "title": "Announcement 2",
+        "creation_date": "2023-09-11T11:20:30Z",
+        "content": "This is the content of the second announcement."
+    }
+    response = requests.post(url,  headers=headers, json=data)
+    print(response.status_code)
+    print(response.json())
+
+def Test_get_announcement(username, password):
+    url = f"http://127.0.0.1:8000/announcement/"
+    headers = Login(username, password)
+    response = requests.get(url,  headers=headers)
+    print(response.status_code)
+    print(response.json())
+
 def Add_ClassRoom():
     username = "admin01"
     password = "123456"
@@ -425,6 +445,16 @@ def GetFeedback():
     username  ="gv20200004"
     password = "123456"
     Test_get_comment_post(username, password)
+
+def CreateAnnouncement():
+    username  ="admin01"
+    password = "123456"
+    Test_create_announcement(username, password)
+
+def GetAnnouncement():
+    username  ="admin01"
+    password = "123456"
+    Test_get_announcement(username, password)
 if __name__ == '__main__':
     # Add_ClassRoom()
     # ChangeInfoClassroom()
@@ -449,4 +479,6 @@ if __name__ == '__main__':
     # GetScore()
     # GetScoreStudent()
     # CreateFeedBack()
-    GetFeedback()
+    # GetFeedback()
+    # CreateAnnouncement()
+    GetAnnouncement()
