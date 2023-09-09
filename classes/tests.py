@@ -256,6 +256,13 @@ def Test_create_feeback(username, password, student_username):
     print(response.status_code)
     print(response.json())
 
+def Test_get_feedback(username, password):
+    url = f"http://127.0.0.1:8000/feedback/"
+    headers = Login(username, password)
+    response = requests.get(url,  headers=headers)
+    print(response.status_code)
+    print(response.json())
+
 
 def Test_create_announcement(username, password):
     url = f"http://127.0.0.1:8000/announcement/add/"
@@ -444,7 +451,7 @@ def Test_get_comment_post (username, password):
 def GetFeedback():
     username  ="gv20200004"
     password = "123456"
-    Test_get_comment_post(username, password)
+    Test_get_feedback(username, password)
 
 def CreateAnnouncement():
     username  ="admin01"
@@ -479,6 +486,6 @@ if __name__ == '__main__':
     # GetScore()
     # GetScoreStudent()
     # CreateFeedBack()
-    # GetFeedback()
+    GetFeedback()
     # CreateAnnouncement()
-    GetAnnouncement()
+    # GetAnnouncement()
