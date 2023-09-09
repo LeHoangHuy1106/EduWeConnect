@@ -317,6 +317,8 @@ def AddStudentJoinInClass():
     Test_add_student_join_classroom(username, password, classroom_id, 'hs20200002')
     Test_add_student_join_classroom(username, password, classroom_id, 'hs20200003')
     Test_add_student_join_classroom(username, password, classroom_id, 'hs20200004')
+
+
 def GetListClassJoinIn():
     username = "admin01"
     password = "123456"
@@ -486,6 +488,6 @@ if __name__ == '__main__':
     # GetScore()
     # GetScoreStudent()
     # CreateFeedBack()
-    GetFeedback()
+    # GetFeedback()
     # CreateAnnouncement()
-    # GetAnnouncement()
+    GetAnnouncement()
