@@ -311,25 +311,23 @@ class CreateScore(APIView):
     def post(self, request, class_id, student_id):
         classroom = get_object_or_404(Classroom, class_id=class_id)
 
-        if request.user.is_superuser or (request.user in classroom.teachers.all()):
-            student = get_object_or_404(User, username =student_id)
-            print(student)
-            score_data = {
-                "classroom": classroom.class_id,
-                "student": student.id,
-                "score_system_1": request.data.get("score_system_1"),
-                "score_system_2": request.data.get("score_system_2"),
-                "score_system_3": request.data.get("score_system_3")
-            }
 
-            serializer = ScoreSerializer(data=score_data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({"message": "You do not have permission to add scores for this student."},
-                            status=status.HTTP_403_FORBIDDEN)
+        student = get_object_or_404(User, username =student_id)
+        print(student)
+        score_data = {
+            "classroom": classroom.class_id,
+            "student": student.id,
+            "score_system_1": request.data.get("score_system_1"),
+            "score_system_2": request.data.get("score_system_2"),
+            "score_system_3": request.data.get("score_system_3")
+        }
+
+        serializer = ScoreSerializer(data=score_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ListScores(APIView):
     def get(self, request, class_id):
